@@ -5,6 +5,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const messageDiv = document.getElementById("message");
 
   // Function to fetch activities from API
+
+  // Helper to create a participant list element
+  function createParticipantsList(participants) {
+    const container = document.createElement("div");
+    container.className = "participants-section";
+    const title = document.createElement("h5");
+    title.textContent = "Participants:";
+    container.appendChild(title);
+
+    if (participants.length === 0) {
+      const none = document.createElement("p");
+      none.textContent = "No one has signed up yet.";
+      none.style.fontStyle = "italic";
+      container.appendChild(none);
+    } else {
+      const ul = document.createElement("ul");
+      ul.className = "participants-list";
+      participants.forEach((p) => {
+        const li = document.createElement("li");
+        li.textContent = p;
+        ul.appendChild(li);
+      });
+      container.appendChild(ul);
+    }
+    return container;
+  }
   async function fetchActivities() {
     try {
       const response = await fetch("/activities");
